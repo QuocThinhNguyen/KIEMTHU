@@ -21,6 +21,7 @@ namespace Buoi07_TinhToan3
         {
             txtSo1.Text = txtSo2.Text = "0";
             radCong.Checked = true;             //đầu tiên chọn phép cộng
+            txtKq.ScrollBars = ScrollBars.Horizontal; 
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -35,9 +36,21 @@ namespace Buoi07_TinhToan3
         private void btnTinh_Click(object sender, EventArgs e)
         {
             //lấy giá trị của 2 ô số
-            double so1, so2, kq = 0;
-            so1 = double.Parse(txtSo1.Text);
-            so2 = double.Parse(txtSo2.Text);
+            decimal so1, so2, kq = 0;
+            try
+            {
+                so1 = decimal.Parse(txtSo1.Text.Trim());
+            }
+            catch (Exception error)
+            {
+                DialogResult dr;
+                dr = MessageBox.Show(error.Message,
+                                     "Thông báo");
+                txtSo1.ResetText();
+                txtSo1.Focus();
+                return;
+            }
+            so2 = decimal.Parse(txtSo2.Text);
             //Thực hiện phép tính dựa vào phép toán được chọn
             if (radCong.Checked) kq = so1 + so2;
             else if (radTru.Checked) kq = so1 - so2;
@@ -45,6 +58,21 @@ namespace Buoi07_TinhToan3
             else if (radChia.Checked && so2 != 0) kq = so1 / so2;
             //Hiển thị kết quả lên trên ô kết quả
             txtKq.Text = kq.ToString();
+        }
+
+        private void txtSo1_TextChanged(object sender, EventArgs e)
+        {
+            double so1 = 0;
+            try
+            {
+                so1 = double.Parse(txtSo1.Text.Trim());
+            } catch (Exception error) {
+                DialogResult dr;
+                dr = MessageBox.Show(error.Message,
+                                     "Thông báo");
+                txtSo1.ResetText();
+                txtSo1.Focus();
+            }
         }
     }
 }
