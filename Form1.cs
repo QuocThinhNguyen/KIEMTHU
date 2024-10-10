@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -94,6 +95,44 @@ namespace Buoi07_TinhToan3
             else if (radChia.Checked && so2 != 0) kq = so1 / so2;
             //Hiển thị kết quả lên trên ô kết quả
             txtKq.Text = kq.ToString();
+        }
+
+        private void txtSo1_Leave(object sender, EventArgs e)
+        {
+            // Biểu thức chính quy chỉ cho phép số, dấu chấm (.) và dấu trừ (-)
+            string pattern = @"[^0-9.-]";
+
+            // Kiểm tra nếu ô nhập liệu chứa ký tự đặc biệt
+            if (Regex.IsMatch(txtSo1.Text, pattern))
+            {
+                MessageBox.Show("Ô số thứ nhất không được chứa ký tự đặc biệt! Vui lòng chỉ nhập số và dấu thập phân (.)",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSo1.Focus(); // Đưa con trỏ trở lại ô số 1
+            }
+        }
+
+        private void txtSo2_Leave(object sender, EventArgs e)
+        {
+            // Biểu thức chính quy chỉ cho phép số, dấu chấm (.) và dấu trừ (-)
+            string pattern = @"[^0-9.-]";
+
+            // Kiểm tra nếu ô nhập liệu chứa ký tự đặc biệt
+            if (Regex.IsMatch(txtSo2.Text, pattern))
+            {
+                MessageBox.Show("Ô số thứ hai không được chứa ký tự đặc biệt! Vui lòng chỉ nhập số và dấu thập phân (.)",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSo2.Focus(); // Đưa con trỏ trở lại ô số 2
+            }
+        }
+
+        private void txtSo1_Enter(object sender, EventArgs e)
+        {
+            txtSo1.SelectAll(); // Chọn toàn bộ nội dung trong ô số 1
+        }
+
+        private void txtSo2_Enter(object sender, EventArgs e)
+        {
+            txtSo2.SelectAll(); // Chọn toàn bộ nội dung trong ô số 2
         }
     }
 }
